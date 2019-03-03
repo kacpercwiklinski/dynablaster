@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DynaBlaster.Class.MapScripts;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,27 +15,27 @@ namespace DynaBlaster.Class.Screen
     class GameScreen : Screen
     {
 
-        public GameScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent)
-        {
-   
+        Map map;
+        
+
+        public GameScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent){
+            map = new Map();
         }
 
-        public override void Update(GameTime theTime)
-        {
+        public override void Update(GameTime gameTime){
 
 
-            base.Update(theTime);
+            base.Update(gameTime);
         }
 
-        public override void Draw(SpriteBatch theBatch)
-        {
-            
+        public override void Draw(SpriteBatch spriteBatch){
 
-            base.Draw(theBatch);
+            map.DrawMap(spriteBatch);
+
+            base.Draw(spriteBatch);
         }
         
-        public void StartGame()
-        {
+        public void StartGame(){
 
         }
 
