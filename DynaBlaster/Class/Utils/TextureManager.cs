@@ -18,7 +18,7 @@ namespace DynaBlaster.Class.Utils {
 
 
         //Object
-        public Texture2D player;
+        public List<Texture2D> player = new List<Texture2D>();
         public Texture2D block;
         public Texture2D wall;
         public Texture2D grass;
@@ -35,11 +35,14 @@ namespace DynaBlaster.Class.Utils {
 
         private void loadTextures(ContentManager theContent) {
 
-            //Background
-            block = theContent.Load<Texture2D>("Object/MapObject/block");
-            wall = theContent.Load<Texture2D>("Object/MapObject/wall");
-            grass = theContent.Load<Texture2D>("Object/MapObject/grass");
-            dirt = theContent.Load<Texture2D>("Object/MapObject/dirt");
+            //Object
+            block = theContent.Load<Texture2D>("Object/MapObject/block/block");
+            wall = theContent.Load<Texture2D>("Object/MapObject/block/wall");
+            grass = theContent.Load<Texture2D>("Object/MapObject/block/grass");
+            dirt = theContent.Load<Texture2D>("Object/MapObject/block/dirt");
+
+            // Object
+            player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
         }
     }
 }

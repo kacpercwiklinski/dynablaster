@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace DynaBlaster.Class.MapScripts {
     class Grass : MapObject {
-
         public Grass(Vector2 pos) : base(pos) {
             this.texture = Game1.textureManager.grass;
+            this.walkable = true;
         }
     }
 }

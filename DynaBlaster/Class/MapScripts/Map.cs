@@ -54,11 +54,11 @@ namespace DynaBlaster.Class.MapScripts {
                         if(random.Next(0,100) > DIRT_SPAWN_CHANCE && !(tempVector.Equals(spawnPoints[0]) || tempVector.Equals(spawnPoints[1]) || tempVector.Equals(spawnPoints[2]) || tempVector.Equals(spawnPoints[3]))) {
                             Boolean onSpawnPoint = false;
                             for (int i = 0; i < spawnPoints.Length; i++) {
-                                if (tempVector.Equals(spawnPoints[i])) onSpawnPoint = true;
-                                if (tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y - 1))) onSpawnPoint = true;
-                                if (tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y + 1))) onSpawnPoint = true;
-                                if (tempVector.Equals(new Vector2(spawnPoints[i].X - 1, spawnPoints[i].Y))) onSpawnPoint = true;
-                                if (tempVector.Equals(new Vector2(spawnPoints[i].X + 1, spawnPoints[i].Y))) onSpawnPoint = true;
+                                if (tempVector.Equals(spawnPoints[i]) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y - 1)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y + 1)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X - 1, spawnPoints[i].Y)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X + 1, spawnPoints[i].Y))) onSpawnPoint = true;
                             }
                             if(!onSpawnPoint) blocks[x, y] = new Dirt(new Vector2(this.mapPosition.X + x * blockSize, this.mapPosition.Y + y * blockSize));
                         }

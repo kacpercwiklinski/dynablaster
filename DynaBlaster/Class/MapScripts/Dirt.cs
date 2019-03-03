@@ -9,6 +9,7 @@ namespace DynaBlaster.Class.MapScripts {
     class Dirt : MapObject {
         public Dirt(Vector2 pos) : base(pos) {
             this.texture = Game1.textureManager.dirt;
+            this.walkable = false;
         }
     }
 }

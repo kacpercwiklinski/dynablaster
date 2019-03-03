@@ -7,11 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace DynaBlaster.Class.MapScripts {
     class Wall : MapObject {
-
         public Wall(Vector2 pos) : base(pos) {
             this.texture = Game1.textureManager.wall;
+            this.walkable = false;
         }
-
-
     }
 }
