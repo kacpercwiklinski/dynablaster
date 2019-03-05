@@ -19,6 +19,7 @@ namespace DynaBlaster.Class.Utils {
 
         //Object
         public List<Texture2D> player = new List<Texture2D>();
+        public List<Texture2D> bomb = new List<Texture2D>();
         public Texture2D block;
         public Texture2D wall;
         public Texture2D grass;
@@ -41,6 +42,7 @@ namespace DynaBlaster.Class.Utils {
 
             // Object
             player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
+            bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_0"));
 
             // Debug
             debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");

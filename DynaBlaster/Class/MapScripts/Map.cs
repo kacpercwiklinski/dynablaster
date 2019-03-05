@@ -13,14 +13,15 @@ namespace DynaBlaster.Class.MapScripts {
         
         const int DIRT_SPAWN_CHANCE = 50;
 
-        private Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
+        public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
         public Vector2[] spawnPoints = new Vector2[4];
 
-        int blockSize = 42;
+        public const int blockSize = 42;
         int cols, rows;
         Random random;
 
         public static MapObject[,] blocks;
+        public static List<Bomb> bombs = new List<Bomb>();
 
         public Map() {
             random = new Random();
@@ -42,11 +43,11 @@ namespace DynaBlaster.Class.MapScripts {
             for(int x = 0; x < cols; x++) {
                 for (int y = 0; y < rows; y++) {
                     if(x == 0 || x == cols-1 || y == 0 || y == rows - 1) {
-                        blocks[x, y] = new Wall(new Vector2(this.mapPosition.X + x * blockSize, this.mapPosition.Y + y * blockSize));
+                        blocks[x, y] = new Wall(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     }else if(x % 2 == 0 && y % 2 == 0) {
-                        blocks[x, y] = new MapObject(new Vector2(this.mapPosition.X + x * blockSize, this.mapPosition.Y + y * blockSize));
+                        blocks[x, y] = new MapObject(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     } else {
-                        blocks[x, y] = new Grass(new Vector2(this.mapPosition.X + x * blockSize, this.mapPosition.Y + y * blockSize));
+                        blocks[x, y] = new Grass(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                         Vector2 tempVector = new Vector2(x, y);
                         if(random.Next(0,100) > DIRT_SPAWN_CHANCE && !(tempVector.Equals(spawnPoints[0]) || tempVector.Equals(spawnPoints[1]) || tempVector.Equals(spawnPoints[2]) || tempVector.Equals(spawnPoints[3]))) {
                             Boolean onSpawnPoint = false;
@@ -57,7 +58,7 @@ namespace DynaBlaster.Class.MapScripts {
                                     tempVector.Equals(new Vector2(spawnPoints[i].X - 1, spawnPoints[i].Y)) ||
                                     tempVector.Equals(new Vector2(spawnPoints[i].X + 1, spawnPoints[i].Y))) onSpawnPoint = true;
                             }
-                            if(!onSpawnPoint) blocks[x, y] = new Dirt(new Vector2(this.mapPosition.X + x * blockSize, this.mapPosition.Y + y * blockSize));
+                            if(!onSpawnPoint) blocks[x, y] = new Dirt(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                         }
                     }
 
@@ -74,10 +75,13 @@ namespace DynaBlaster.Class.MapScripts {
                     }
                 }
             }
+
+            bombs.ForEach((bomb) => bomb.Draw(spriteBatch));
         }
 
         public void UpdateMap(GameTime gameTime) {
-
+            bombs.ForEach((bomb) => bomb.Update(gameTime));
+            bombs = bombs.FindAll((bomb) => !bomb.exploded);
         }
     }
 }

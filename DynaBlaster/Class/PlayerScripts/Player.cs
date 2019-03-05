@@ -1,4 +1,5 @@
 ﻿using DynaBlaster.Class.MapScripts;
+using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,8 +13,11 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.PlayerScripts {
     class Player : MapObject {
 
+        private const float BOMB_PLACE_RATE = 2f;
+
         float speed = 200f;
         private Vector2 prevPos = new Vector2();
+        private float bombTimer = 0f;
 
         public Player(Vector2 pos) : base(pos) {
             this.texture = Game1.textureManager.player.First();
@@ -21,6 +25,8 @@ namespace DynaBlaster.Class.PlayerScripts {
         }
         
         public override void Update(GameTime gameTime) {
+
+            handleTimers(gameTime);
             
             prevPos = this.pos;
             handleMovement(gameTime);
@@ -52,6 +58,19 @@ namespace DynaBlaster.Class.PlayerScripts {
                 dx = 1 * this.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
+            if (state.IsKeyDown(Keys.Space) && bombTimer <= 0f) {
+                Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
+                bombPos = GridManager.GetFromGridPosition((int)bombPos.X, (int)bombPos.Y);
+
+                Map.bombs.Add(new Bomb(bombPos));
+
+
+
+
+
+                bombTimer = BOMB_PLACE_RATE;
+            }
+
             this.pos.X += dx;
             this.pos.Y += dy;
 
@@ -76,6 +95,11 @@ namespace DynaBlaster.Class.PlayerScripts {
                     this.pos = prevPos;
                 } 
             });
+        }
+
+
+        private void handleTimers(GameTime gameTime) {
+            this.bombTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }

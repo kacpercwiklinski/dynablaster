@@ -27,8 +27,10 @@ namespace DynaBlaster.Class.Screen
         }
 
         public override void Update(GameTime gameTime){
-            players.ForEach((player) => player.Update(gameTime));
+            map.UpdateMap(gameTime);
 
+            players.ForEach((player) => player.Update(gameTime));
+            
             base.Update(gameTime);
         }
 

@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Class\MapScripts\Bomb.cs" />
     <Compile Include="Class\MapScripts\Dirt.cs" />
     <Compile Include="Class\MapScripts\Grass.cs" />
     <Compile Include="Class\MapScripts\Map.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Class\Screen\SplashScreen.cs" />
     <Compile Include="Class\Utils\Animator.cs" />
     <Compile Include="Class\Utils\AudioManager.cs" />
+    <Compile Include="Class\Utils\GridManager.cs" />
     <Compile Include="Class\Utils\LineBatch.cs" />
     <Compile Include="Class\Utils\TextureManager.cs" />
     <Compile Include="Game1.cs" />
