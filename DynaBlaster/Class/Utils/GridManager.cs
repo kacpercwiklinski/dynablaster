@@ -1,5 +1,6 @@
 ﻿using DynaBlaster.Class.MapScripts;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,10 @@ namespace DynaBlaster.Class.Utils {
                 }
             }
             return new Vector2();
+        }
+
+        public static Vector2 getTextureSpacing(Texture2D texture) {
+            return new Vector2((Map.blockSize - texture.Width) / 2, (Map.blockSize - texture.Height) / 2);
         }
     }
 }

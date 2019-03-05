@@ -76,6 +76,10 @@ namespace DynaBlaster.Class.PlayerScripts {
             setupBoundingBox();
         }
 
+        public override void setupBoundingBox() {
+            this.boundingBox = new Rectangle((int)this.pos.X, (int)this.pos.Y + 10, this.texture.Width, this.texture.Height - 20);
+        }
+
         private void handleCollisions(GameTime gameTime) {
             List<MapObject> tempObjects = new List<MapObject>();
 

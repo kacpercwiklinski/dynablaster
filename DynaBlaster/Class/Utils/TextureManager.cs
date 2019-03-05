@@ -25,6 +25,10 @@ namespace DynaBlaster.Class.Utils {
         public Texture2D grass;
         public Texture2D dirt;
 
+        public List<Texture2D> explosionCenter = new List<Texture2D>();
+        public List<Texture2D> explosionHorizontalCenter = new List<Texture2D>();
+        public List<Texture2D> explosionRightEnd = new List<Texture2D>();
+
         // Debug
         public Texture2D debugPoint;
 
@@ -46,6 +50,25 @@ namespace DynaBlaster.Class.Utils {
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_0"));
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_1"));
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_2"));
+
+
+            explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_4"));
+            explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_2"));
+            explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_1"));
+            explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_0"));
+
+            explosionHorizontalCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionHorizontalCenter_3"));
+            explosionHorizontalCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionHorizontalCenter_2"));
+            explosionHorizontalCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionHorizontalCenter_1"));
+            explosionHorizontalCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionHorizontalCenter_0"));
+
+
+
+            explosionRightEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/ExplosionRightEnd_3"));
+            explosionRightEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/ExplosionRightEnd_2"));
+            explosionRightEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/ExplosionRightEnd_1"));
+            explosionRightEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/ExplosionRightEnd_0"));
+
 
             // Debug
             debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");

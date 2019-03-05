@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.MapScripts {
 
     class Map {
-        const int DIRT_SPAWN_CHANCE = 50;
+        const int DIRT_SPAWN_CHANCE = 100;
 
         public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
         public Vector2[] spawnPoints = new Vector2[4];
@@ -21,6 +21,7 @@ namespace DynaBlaster.Class.MapScripts {
 
         public static MapObject[,] blocks;
         public static List<Bomb> bombs = new List<Bomb>();
+        public static List<Explosion> explosions = new List<Explosion>();
 
         public Map() {
             random = new Random();
@@ -73,11 +74,15 @@ namespace DynaBlaster.Class.MapScripts {
                 }
             }
             bombs.ForEach((bomb) => bomb.Draw(spriteBatch));
+            explosions.ForEach((explosion) => explosion.Draw(spriteBatch));
         }
 
         public void UpdateMap(GameTime gameTime) {
             bombs.ForEach((bomb) => bomb.Update(gameTime));
             bombs = bombs.FindAll((bomb) => !bomb.exploded);
+            
+            explosions.ForEach((explosion) => explosion.Update(gameTime));
+            explosions = explosions.FindAll((explosion) => explosion.livingTime > 0f);
         }
     }
 }
