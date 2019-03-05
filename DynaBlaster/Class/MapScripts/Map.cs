@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.MapScripts {
 
     class Map {
-        
         const int DIRT_SPAWN_CHANCE = 50;
 
         public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
@@ -61,8 +60,6 @@ namespace DynaBlaster.Class.MapScripts {
                             if(!onSpawnPoint) blocks[x, y] = new Dirt(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                         }
                     }
-
-                    
                 }
             }
         }
@@ -75,7 +72,6 @@ namespace DynaBlaster.Class.MapScripts {
                     }
                 }
             }
-
             bombs.ForEach((bomb) => bomb.Draw(spriteBatch));
         }
 

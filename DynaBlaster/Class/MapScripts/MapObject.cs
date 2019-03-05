@@ -27,11 +27,10 @@ namespace DynaBlaster.Class.MapScripts {
 
         public virtual void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(this.texture, this.pos, Color.White);
-            LineBatch.drawBoundingBox(this.boundingBox, spriteBatch);
+
+            if (Game1.debugMode) LineBatch.drawBoundingBox(this.boundingBox, spriteBatch);
         }
 
-        public virtual void Update(GameTime gameTime) {
-            
-        }
+        public virtual void Update(GameTime gameTime) { }
     }
 }

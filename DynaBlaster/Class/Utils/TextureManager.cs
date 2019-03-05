@@ -42,7 +42,10 @@ namespace DynaBlaster.Class.Utils {
 
             // Object
             player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
+
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_0"));
+            bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_1"));
+            bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_2"));
 
             // Debug
             debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");

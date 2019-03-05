@@ -25,7 +25,6 @@ namespace DynaBlaster.Class.Utils {
                        pixelY < Map.blocks[x, y].pos.Y + Map.blockSize) return new Vector2(x, y);
                 }
             }
-
             return new Vector2();
         }
     }
