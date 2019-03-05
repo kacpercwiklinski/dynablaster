@@ -15,7 +15,7 @@ namespace DynaBlaster.Class.MapScripts {
         float upCounter = 0f;
         public bool exploded = false;
         private Vector2 positionSpacing;
-        //private int bombRange = 2;
+        private int bombRange = 20;
 
         public Bomb(Vector2 pos) : base(pos) {
             positionSpacing = GridManager.getTextureSpacing(Game1.textureManager.bomb.First());
@@ -38,7 +38,7 @@ namespace DynaBlaster.Class.MapScripts {
         }
 
         private void explode() {
-            Map.explosions.Add(new Explosion(this.pos, 5));
+            Map.explosions.Add(new Explosion(this.pos, bombRange));
         }
     }
 
@@ -46,7 +46,7 @@ namespace DynaBlaster.Class.MapScripts {
 
         int range = 1;
         float counter = 0f;
-        public float livingTime = 0.5f;
+        public float livingTime = 0.5f; //0.5f;
         public List<Wing> wings = new List<Wing>();
 
 
@@ -54,7 +54,10 @@ namespace DynaBlaster.Class.MapScripts {
             this.range = range;
             this.texture = Game1.textureManager.explosionCenter.First();
 
-            wings.Add(new Wing(this.pos, Wing.WingSide.Right, 4));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Right, this.range));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Left, this.range));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Top, this.range));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Bottom, this.range));
         }
 
         public override void Update(GameTime gameTime) {
@@ -88,7 +91,7 @@ namespace DynaBlaster.Class.MapScripts {
 
 
             public Wing(Vector2 parentPos, WingSide wingSide, int range) {
-                this.parentPos = new Vector2(parentPos.X,parentPos.Y+5);
+                this.parentPos = new Vector2(parentPos.X,parentPos.Y);
                 this.wingSide = wingSide;
                 this.range = range;
 
@@ -97,7 +100,31 @@ namespace DynaBlaster.Class.MapScripts {
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32 , parentPos.Y), "ExplosionRightEnd")); 
                         } else {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionHorizontalCenter"));
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y + 2), "ExplosionHorizontalCenter"));
+                        }
+                    }
+                }else if (wingSide == WingSide.Left) {
+                    for (int i = 1; i <= range; i++) {
+                        if (i == range) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                        } else {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y + 2), "ExplosionHorizontalCenter"));
+                        }
+                    }
+                } else if (wingSide == WingSide.Top) {
+                    for (int i = 1; i <= range; i++) {
+                        if (i == range) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X , parentPos.Y - i * 32), "ExplosionTopEnd"));
+                        } else {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X , parentPos.Y - i * 32), "ExplosionVerticalCenter"));
+                        }
+                    }
+                } else if (wingSide == WingSide.Bottom) {
+                    for (int i = 1; i <= range; i++) {
+                        if (i == range) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                        } else {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionVerticalCenter"));
                         }
                     }
                 }
@@ -118,6 +145,7 @@ namespace DynaBlaster.Class.MapScripts {
 
                 Texture2D texture;
                 public float animatorCounter = 0f;
+                private float animationFrameTime = 0.125f;
 
                 public WingPart(Vector2 pos, String partLabel) {
                     this.partLabel = partLabel;
@@ -127,6 +155,14 @@ namespace DynaBlaster.Class.MapScripts {
                         this.texture = Game1.textureManager.explosionHorizontalCenter.First();
                     }else if (partLabel.Equals("ExplosionRightEnd")) {
                         this.texture = Game1.textureManager.explosionRightEnd.First();
+                    } else if (partLabel.Equals("ExplosionLeftEnd")) {
+                        this.texture = Game1.textureManager.explosionLeftEnd.First();
+                    } else if (partLabel.Equals("ExplosionVerticalCenter")) {
+                        this.texture = Game1.textureManager.explosionVerticalCenter.First();
+                    } else if (partLabel.Equals("ExplosionTopEnd")) {
+                        this.texture = Game1.textureManager.explosionTopEnd.First();
+                    } else if (partLabel.Equals("ExplosionBottomEnd")) {
+                        this.texture = Game1.textureManager.explosionBottomEnd.First();
                     }
                 }
 
@@ -138,9 +174,17 @@ namespace DynaBlaster.Class.MapScripts {
                     animatorCounter += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     if (partLabel.Equals("ExplosionHorizontalCenter")) {
-                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionHorizontalCenter, 0.125f,ref animatorCounter, true);
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionHorizontalCenter, animationFrameTime, ref animatorCounter, true);
                     } else if (partLabel.Equals("ExplosionRightEnd")) {
-                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionRightEnd, 0.125f, ref animatorCounter, true);
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionRightEnd, animationFrameTime, ref animatorCounter, true);
+                    } else if (partLabel.Equals("ExplosionLeftEnd")) {
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionLeftEnd, animationFrameTime, ref animatorCounter, true);
+                    } else if (partLabel.Equals("ExplosionVerticalCenter")) {
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionVerticalCenter, animationFrameTime, ref animatorCounter, true);
+                    } else if (partLabel.Equals("ExplosionTopEnd")) {
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionTopEnd, animationFrameTime, ref animatorCounter, true);
+                    } else if (partLabel.Equals("ExplosionBottomEnd")) {
+                        Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionBottomEnd, animationFrameTime, ref animatorCounter, true);
                     }
                 }
             }
