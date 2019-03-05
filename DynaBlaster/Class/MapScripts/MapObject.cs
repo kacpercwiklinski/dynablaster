@@ -18,13 +18,20 @@ namespace DynaBlaster.Class.MapScripts {
             this.pos = pos;
             this.texture = Game1.textureManager.block;
             this.walkable = false;
+            setupBoundingBox();
+        }
+
+        public virtual void setupBoundingBox() {
             this.boundingBox = new Rectangle((int)this.pos.X, (int)this.pos.Y, this.texture.Width, this.texture.Height);
         }
 
-        public virtual void DrawBlock(SpriteBatch spriteBatch) {
+        public virtual void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(this.texture, this.pos, Color.White);
             LineBatch.drawBoundingBox(this.boundingBox, spriteBatch);
         }
 
+        public virtual void Update(GameTime gameTime) {
+            
+        }
     }
 }

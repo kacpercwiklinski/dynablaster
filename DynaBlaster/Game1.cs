@@ -49,6 +49,7 @@ namespace DynaBlaster
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            LineBatch.Init(GraphicsDevice);
 
             base.Initialize();
         }
@@ -86,10 +87,13 @@ namespace DynaBlaster
         private void MenuScreenEvent(object sender, EventArgs e)
         {
             Option chosenOption = mMenuScreen.options.Find((option) => option.active);
-            if (chosenOption.label.Equals("Play"))
+            if (chosenOption.label.Equals("Play singleplayer"))
             {
                 mCurrentScreen = mGameScreen;
-                mGameScreen.StartGame();
+                mGameScreen.StartGame(GameMode.Single);
+            } else if (chosenOption.label.Equals("Play multiplayer")) {
+                mCurrentScreen = mGameScreen;
+                mGameScreen.StartGame(GameMode.Multi);
             } else if (chosenOption.label.Equals("Exit"))
             {
                 Exit();

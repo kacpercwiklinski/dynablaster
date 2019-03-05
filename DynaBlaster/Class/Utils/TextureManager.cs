@@ -25,9 +25,7 @@ namespace DynaBlaster.Class.Utils {
         public Texture2D dirt;
 
         // Debug
-        public Texture2D centerLine;
-        public Texture2D point;
-        public Texture2D curvePoint;
+        public Texture2D debugPoint;
 
         public TextureManager(ContentManager theContent) {
             loadTextures(theContent);
@@ -43,6 +41,9 @@ namespace DynaBlaster.Class.Utils {
 
             // Object
             player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
+
+            // Debug
+            debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");
         }
     }
 }

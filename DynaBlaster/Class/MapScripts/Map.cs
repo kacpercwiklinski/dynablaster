@@ -14,24 +14,21 @@ namespace DynaBlaster.Class.MapScripts {
         const int DIRT_SPAWN_CHANCE = 50;
 
         private Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
-        private Vector2[] spawnPoints = new Vector2[4];
+        public Vector2[] spawnPoints = new Vector2[4];
 
         int blockSize = 42;
         int cols, rows;
         Random random;
 
-        MapObject[,] blocks;
+        public static MapObject[,] blocks;
 
         public Map() {
             random = new Random();
 
-            cols = Game1.WIDTH /2 / blockSize;
+            cols = Game1.WIDTH  / blockSize / 2;
             rows = Game1.HEIGHT / blockSize;
 
             blocks = new MapObject[cols, rows];
-
-            Debug.WriteLine(cols);
-            Debug.WriteLine(rows);
 
             spawnPoints[0] = new Vector2(1, 1);
             spawnPoints[1] = new Vector2(cols-2, 1);
@@ -73,7 +70,7 @@ namespace DynaBlaster.Class.MapScripts {
             for (int x = 0; x < cols; x++) {
                 for (int y = 0; y < rows; y++) {
                     if(blocks[x, y] != null) {
-                        blocks[x, y].DrawBlock(spriteBatch);
+                        blocks[x, y].Draw(spriteBatch);
                     }
                 }
             }

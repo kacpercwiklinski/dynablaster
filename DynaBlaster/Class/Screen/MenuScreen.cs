@@ -22,7 +22,8 @@ namespace DynaBlaster.Class.Screen
             //mTitleScreenBackground = Game1.textureManager.mainMenuScreenBackground; 
 
             options = new List<Option>();
-            options.Add(new Option("Play", true));
+            options.Add(new Option("Play singleplayer", true));
+            options.Add(new Option("Play multiplayer", false));
             options.Add(new Option("Exit", false));
 
             optionsFont = theContent.Load<SpriteFont>("font/optionFont");
