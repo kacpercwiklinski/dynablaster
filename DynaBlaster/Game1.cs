@@ -19,7 +19,7 @@ namespace DynaBlaster
         public static TextureManager textureManager;
         public static AudioManager audioManager;
 
-        public static bool debugMode = false;
+        public static bool debugMode = true;
 
         SplashScreen mSplashScreen;
         Screen mCurrentScreen;

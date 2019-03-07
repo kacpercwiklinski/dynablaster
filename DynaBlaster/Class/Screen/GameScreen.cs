@@ -16,7 +16,6 @@ namespace DynaBlaster.Class.Screen
     public enum GameMode { Single, Multi }
     class GameScreen : Screen
     {
-
         Map map;
         List<Player> players = new List<Player>();
         GameMode gameMode = GameMode.Single;
@@ -36,9 +35,8 @@ namespace DynaBlaster.Class.Screen
 
         public override void Draw(SpriteBatch spriteBatch){
             map.DrawMap(spriteBatch);
-
-
             players.ForEach((player) => player.Draw(spriteBatch));
+
             base.Draw(spriteBatch);
         }
         

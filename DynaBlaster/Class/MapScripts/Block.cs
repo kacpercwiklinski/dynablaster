@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 namespace DynaBlaster.Class.MapScripts {
-    class Wall : MapObject {
-        
-        public Wall(Vector2 pos) : base(pos) {
-            this.texture = Game1.textureManager.wall;
+    class Block : MapObject {
+        public Block(Vector2 pos) : base(pos) {
+            this.label = "Block";
             this.walkable = false;
-            this.label = "Wall";
+            this.texture = Game1.textureManager.block;
         }
     }
 }

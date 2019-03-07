@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Class\MapScripts\Block.cs" />
     <Compile Include="Class\MapScripts\Bomb.cs" />
     <Compile Include="Class\MapScripts\Dirt.cs" />
     <Compile Include="Class\MapScripts\Grass.cs" />

@@ -11,11 +11,11 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DynaBlaster.Class.MapScripts {
     class Bomb : MapObject {
 
-        float timer = 3f;
+        float timer = 2.5f;
         float upCounter = 0f;
         public bool exploded = false;
         private Vector2 positionSpacing;
-        private int bombRange = 20;
+        private int bombRange = 5;
 
         public Bomb(Vector2 pos) : base(pos) {
             positionSpacing = GridManager.getTextureSpacing(Game1.textureManager.bomb.First());
@@ -44,15 +44,17 @@ namespace DynaBlaster.Class.MapScripts {
 
     class Explosion : MapObject {
 
-        int range = 1;
+        int range;
         float counter = 0f;
         public float livingTime = 0.5f; //0.5f;
         public List<Wing> wings = new List<Wing>();
 
 
         public Explosion(Vector2 pos, int range) : base(pos) {
+            this.label = "Explosion";
             this.range = range;
             this.texture = Game1.textureManager.explosionCenter.First();
+            setupBoundingBox();
 
             wings.Add(new Wing(this.pos, Wing.WingSide.Right, this.range));
             wings.Add(new Wing(this.pos, Wing.WingSide.Left, this.range));
@@ -85,42 +87,60 @@ namespace DynaBlaster.Class.MapScripts {
             public enum WingSide { Left, Right, Top, Bottom }
 
             WingSide wingSide;
+            Vector2 centerOfExplosion;
             int range;
             Vector2 parentPos;
-            List<WingPart> wingParts = new List<WingPart>();
+            public List<WingPart> wingParts = new List<WingPart>();
 
 
             public Wing(Vector2 parentPos, WingSide wingSide, int range) {
                 this.parentPos = new Vector2(parentPos.X,parentPos.Y);
+                centerOfExplosion = new Vector2(parentPos.X + Game1.textureManager.explosionCenter.First().Width/2, parentPos.Y + Game1.textureManager.explosionCenter.First().Height / 2);
                 this.wingSide = wingSide;
                 this.range = range;
 
                 if(wingSide == WingSide.Right) {
                     for (int i = 1; i <= range; i++) {
+                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
+                            break;
+                        }
                         if (i == range) {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32 , parentPos.Y), "ExplosionRightEnd")); 
+                                wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
                         } else {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y + 2), "ExplosionHorizontalCenter"));
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionHorizontalCenter"));
                         }
                     }
                 }else if (wingSide == WingSide.Left) {
                     for (int i = 1; i <= range; i++) {
+                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            break;
+                        }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
                         } else {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y + 2), "ExplosionHorizontalCenter"));
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionHorizontalCenter"));
                         }
                     }
                 } else if (wingSide == WingSide.Top) {
                     for (int i = 1; i <= range; i++) {
+                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Block Wall Explosion")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            break;
+                        }
                         if (i == range) {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X , parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            wingParts.Add(new WingPart(new Vector2(this.parentPos.X , this.parentPos.Y - i * 32), "ExplosionTopEnd"));
                         } else {
-                            wingParts.Add(new WingPart(new Vector2(parentPos.X , parentPos.Y - i * 32), "ExplosionVerticalCenter"));
+                            wingParts.Add(new WingPart(new Vector2(this.parentPos.X , this.parentPos.Y - i * 32), "ExplosionVerticalCenter"));
                         }
                     }
                 } else if (wingSide == WingSide.Bottom) {
                     for (int i = 1; i <= range; i++) {
+                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + (i * 32)), "Block Wall Explosion")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            break;
+                        }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
                         } else {
@@ -139,7 +159,7 @@ namespace DynaBlaster.Class.MapScripts {
             }
 
 
-            class WingPart {
+            public class WingPart {
                 Vector2 pos;
                 String partLabel;
 

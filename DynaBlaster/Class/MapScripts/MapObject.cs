@@ -9,12 +9,21 @@ using System.Threading.Tasks;
 
 namespace DynaBlaster.Class.MapScripts {
     class MapObject {
+        public String label = "MapObject";
         public Vector2 pos;
         public Texture2D texture;
         public Boolean walkable;
         public Rectangle boundingBox;
 
         public MapObject(Vector2 pos) {
+            this.pos = pos;
+            this.texture = Game1.textureManager.block;
+            this.walkable = false;
+            setupBoundingBox();
+        }
+
+        public MapObject(String label, Vector2 pos) {
+            this.label = label;
             this.pos = pos;
             this.texture = Game1.textureManager.block;
             this.walkable = false;

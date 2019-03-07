@@ -45,7 +45,7 @@ namespace DynaBlaster.Class.MapScripts {
                     if(x == 0 || x == cols-1 || y == 0 || y == rows - 1) {
                         blocks[x, y] = new Wall(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     }else if(x % 2 == 0 && y % 2 == 0) {
-                        blocks[x, y] = new MapObject(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
+                        blocks[x, y] = new Block(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     } else {
                         blocks[x, y] = new Grass(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                         Vector2 tempVector = new Vector2(x, y);

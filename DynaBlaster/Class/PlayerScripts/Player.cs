@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.PlayerScripts {
     class Player : MapObject {
 
-        private const float BOMB_PLACE_RATE = 0.5f;
+        private const float BOMB_PLACE_RATE = 0.1f;
 
         float speed = 200f;
         private Vector2 prevPos = new Vector2();
@@ -31,8 +31,6 @@ namespace DynaBlaster.Class.PlayerScripts {
             prevPos = this.pos;
             handleMovement(gameTime);
             handleCollisions(gameTime);
-
-            Debug.WriteLine(Map.bombs.Count());
 
             base.Update(gameTime);
         }
@@ -62,7 +60,7 @@ namespace DynaBlaster.Class.PlayerScripts {
 
             if (state.IsKeyDown(Keys.Space) && bombTimer <= 0f) {
                 Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
-                bombPos = GridManager.GetFromGridPosition((int)bombPos.X, (int)bombPos.Y);
+                bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
                 if (!Map.bombs.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
                     Map.bombs.Add(new Bomb(bombPos));
