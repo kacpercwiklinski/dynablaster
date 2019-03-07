@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.MapScripts {
 
     class Map {
-        const int DIRT_SPAWN_CHANCE = 100;
+        const int DIRT_SPAWN_CHANCE = 35;
 
         public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
         public Vector2[] spawnPoints = new Vector2[4];

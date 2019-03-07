@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.PlayerScripts {
     class Player : MapObject {
 
-        private const float BOMB_PLACE_RATE = 0.1f;
+        private const float BOMB_PLACE_RATE = 0.5f;
 
         float speed = 200f;
         private Vector2 prevPos = new Vector2();
         private float bombTimer = 0f;
+        private int bombRange = 1;
 
         public Player(Vector2 pos) : base(pos) {
             this.texture = Game1.textureManager.player.First();
@@ -63,7 +64,7 @@ namespace DynaBlaster.Class.PlayerScripts {
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
                 if (!Map.bombs.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
-                    Map.bombs.Add(new Bomb(bombPos));
+                    Map.bombs.Add(new Bomb(bombPos, this.bombRange));
                     bombTimer = BOMB_PLACE_RATE;
                 }
             }
@@ -83,8 +84,10 @@ namespace DynaBlaster.Class.PlayerScripts {
 
             for (int x = 0; x < Map.blocks.GetLength(0); x++) {
                 for (int y = 0; y < Map.blocks.GetLength(1); y++) {
-                    if(Vector2.Distance(Map.blocks[x,y].pos,this.pos) < 80) {
-                        tempObjects.Add(Map.blocks[x, y]);
+                    if(Map.blocks[x, y] != null) {
+                        if (Vector2.Distance(Map.blocks[x, y].pos, this.pos) < 80) {
+                            tempObjects.Add(Map.blocks[x, y]);
+                        }
                     }
                 }
             }

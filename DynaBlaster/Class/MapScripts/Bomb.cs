@@ -15,12 +15,13 @@ namespace DynaBlaster.Class.MapScripts {
         float upCounter = 0f;
         public bool exploded = false;
         private Vector2 positionSpacing;
-        private int bombRange = 5;
+        private int bombRange = 1;
 
-        public Bomb(Vector2 pos) : base(pos) {
+        public Bomb(Vector2 pos, int bombRange) : base(pos) {
             positionSpacing = GridManager.getTextureSpacing(Game1.textureManager.bomb.First());
             this.pos = new Vector2(pos.X + positionSpacing.X, pos.Y + positionSpacing.Y);
             this.texture = Game1.textureManager.bomb.First();
+            this.bombRange = bombRange;
         }
 
         public override void Update(GameTime gameTime) {
@@ -46,7 +47,7 @@ namespace DynaBlaster.Class.MapScripts {
 
         int range;
         float counter = 0f;
-        public float livingTime = 0.5f; //0.5f;
+        public float livingTime = 0.5f; 
         public List<Wing> wings = new List<Wing>();
 
 
@@ -104,6 +105,11 @@ namespace DynaBlaster.Class.MapScripts {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
                             break;
+                        } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Dirt")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
+                            Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y);
+                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            break;
                         }
                         if (i == range) {
                                 wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
@@ -115,6 +121,11 @@ namespace DynaBlaster.Class.MapScripts {
                     for (int i = 1; i <= range; i++) {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            break;
+                        } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Dirt")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y);
+                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
                             break;
                         }
                         if (i == range) {
@@ -128,6 +139,11 @@ namespace DynaBlaster.Class.MapScripts {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
                             break;
+                        } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Dirt")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32);
+                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            break;
                         }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(this.parentPos.X , this.parentPos.Y - i * 32), "ExplosionTopEnd"));
@@ -137,8 +153,13 @@ namespace DynaBlaster.Class.MapScripts {
                     }
                 } else if (wingSide == WingSide.Bottom) {
                     for (int i = 1; i <= range; i++) {
-                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + (i * 32)), "Block Wall Explosion")) {
+                        if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            break;
+                        } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32), "Dirt")) {
+                            wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32);
+                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
                             break;
                         }
                         if (i == range) {
