@@ -20,7 +20,7 @@ namespace DynaBlaster.Class.MapScripts {
         Random random;
 
         public static MapObject[,] blocks;
-        public static List<Bomb> bombs = new List<Bomb>();
+        public static List<MapObject> mapObjects = new List<MapObject>();
         public static List<Explosion> explosions = new List<Explosion>();
 
         public Map() {
@@ -73,13 +73,16 @@ namespace DynaBlaster.Class.MapScripts {
                     }
                 }
             }
-            bombs.ForEach((bomb) => bomb.Draw(spriteBatch));
+            mapObjects.ForEach((mapObject) => mapObject.Draw(spriteBatch));
             explosions.ForEach((explosion) => explosion.Draw(spriteBatch));
         }
 
         public void UpdateMap(GameTime gameTime) {
-            bombs.ForEach((bomb) => bomb.Update(gameTime));
-            bombs = bombs.FindAll((bomb) => !bomb.exploded);
+
+            for (int i = 0; i < mapObjects.Count(); i++) {
+                mapObjects[i].Update(gameTime);
+            }
+            mapObjects = mapObjects.FindAll((mapObject) => !mapObject.destroyed);
             
             explosions.ForEach((explosion) => explosion.Update(gameTime));
             explosions = explosions.FindAll((explosion) => explosion.livingTime > 0f);

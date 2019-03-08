@@ -21,6 +21,7 @@ namespace DynaBlaster.Class.PlayerScripts {
         private int bombRange = 1;
 
         public Player(Vector2 pos) : base(pos) {
+            this.label = "Player";
             this.texture = Game1.textureManager.player.First();
             setupBoundingBox();
         }
@@ -63,8 +64,8 @@ namespace DynaBlaster.Class.PlayerScripts {
                 Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
-                if (!Map.bombs.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
-                    Map.bombs.Add(new Bomb(bombPos, this.bombRange));
+                if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
+                    Map.mapObjects.Add(new Bomb(bombPos, this.bombRange));
                     bombTimer = BOMB_PLACE_RATE;
                 }
             }
@@ -94,8 +95,21 @@ namespace DynaBlaster.Class.PlayerScripts {
             
             tempObjects.ForEach((obj) => {
                 if (this.boundingBox.Intersects(obj.boundingBox) && obj.walkable == false) {
-                    this.pos = prevPos;
-                } 
+                        this.pos = prevPos;
+                }
+            });
+
+            Map.mapObjects.ForEach(mapObj => {
+                if (this.boundingBox.Intersects(mapObj.boundingBox) && mapObj.walkable == true) {
+                    Debug.WriteLine("Cos tam styka");
+                    if (mapObj.label.Equals("Bonus")) {
+                        Bonus bonus = (Bonus)mapObj;
+                        if (bonus.bonusType == BonusType.BombRangeBonus) {
+                            this.bombRange += bonus.bonusValue;
+                            mapObj.destroyed = true;
+                        }
+                    }
+                }
             });
         }
         

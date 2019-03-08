@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Class\MapScripts\Block.cs" />
     <Compile Include="Class\MapScripts\Bomb.cs" />
+    <Compile Include="Class\MapScripts\BombRangeBonus.cs" />
+    <Compile Include="Class\MapScripts\Bonus.cs" />
     <Compile Include="Class\MapScripts\Dirt.cs" />
     <Compile Include="Class\MapScripts\Grass.cs" />
     <Compile Include="Class\MapScripts\Map.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Class\Utils\AudioManager.cs" />
     <Compile Include="Class\Utils\GridManager.cs" />
     <Compile Include="Class\Utils\LineBatch.cs" />
+    <Compile Include="Class\Utils\Randomizer.cs" />
     <Compile Include="Class\Utils\TextureManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

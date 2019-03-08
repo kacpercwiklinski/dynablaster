@@ -14,6 +14,7 @@ namespace DynaBlaster.Class.MapScripts {
         public Texture2D texture;
         public Boolean walkable;
         public Rectangle boundingBox;
+        public Boolean destroyed = false;
 
         public MapObject(Vector2 pos) {
             this.pos = pos;

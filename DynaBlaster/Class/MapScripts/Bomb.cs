@@ -13,7 +13,6 @@ namespace DynaBlaster.Class.MapScripts {
 
         float timer = 2.5f;
         float upCounter = 0f;
-        public bool exploded = false;
         private Vector2 positionSpacing;
         private int bombRange = 1;
 
@@ -32,7 +31,7 @@ namespace DynaBlaster.Class.MapScripts {
             
             if(timer <= 0f) {
                 explode();
-                exploded = true;
+                destroyed = true;
             }
 
             base.Update(gameTime);
@@ -108,7 +107,10 @@ namespace DynaBlaster.Class.MapScripts {
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y);
-                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            if(Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
+                                Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
+                                tempDirt.Destroy();
+                            }
                             break;
                         }
                         if (i == range) {
@@ -125,7 +127,10 @@ namespace DynaBlaster.Class.MapScripts {
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y);
-                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
+                                Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
+                                tempDirt.Destroy();
+                            }
                             break;
                         }
                         if (i == range) {
@@ -142,7 +147,10 @@ namespace DynaBlaster.Class.MapScripts {
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32);
-                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
+                                Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
+                                tempDirt.Destroy();
+                            }
                             break;
                         }
                         if (i == range) {
@@ -159,7 +167,10 @@ namespace DynaBlaster.Class.MapScripts {
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32);
-                            Map.blocks[(int)blockPos.X, (int)blockPos.Y] = new Grass(GridManager.absolutePosition((int)blockPos.X, (int)blockPos.Y));
+                            if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
+                                Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
+                                tempDirt.Destroy();
+                            }
                             break;
                         }
                         if (i == range) {
