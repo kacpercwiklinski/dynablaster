@@ -64,6 +64,7 @@ namespace DynaBlaster.Class.PlayerScripts {
                 Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
+                
                 if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
                     Map.mapObjects.Add(new Bomb(bombPos, this.bombRange));
                     bombTimer = BOMB_PLACE_RATE;
@@ -83,6 +84,7 @@ namespace DynaBlaster.Class.PlayerScripts {
         private void handleCollisions(GameTime gameTime) {
             List<MapObject> tempObjects = new List<MapObject>();
 
+            // Get closest blocks
             for (int x = 0; x < Map.blocks.GetLength(0); x++) {
                 for (int y = 0; y < Map.blocks.GetLength(1); y++) {
                     if(Map.blocks[x, y] != null) {
@@ -93,17 +95,20 @@ namespace DynaBlaster.Class.PlayerScripts {
                 }
             }
             
+            // Check collisons with blocks
             tempObjects.ForEach((obj) => {
                 if (this.boundingBox.Intersects(obj.boundingBox) && obj.walkable == false) {
                         this.pos = prevPos;
                 }
             });
 
+            // Check collisons with map objects
             Map.mapObjects.ForEach(mapObj => {
                 if (this.boundingBox.Intersects(mapObj.boundingBox) && mapObj.walkable == true) {
-                    Debug.WriteLine("Cos tam styka");
+                    // Check if object is bonus
                     if (mapObj.label.Equals("Bonus")) {
                         Bonus bonus = (Bonus)mapObj;
+                        // Check bonus type
                         if (bonus.bonusType == BonusType.BombRangeBonus) {
                             this.bombRange += bonus.bonusValue;
                             mapObj.destroyed = true;
