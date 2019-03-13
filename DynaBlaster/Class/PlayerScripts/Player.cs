@@ -13,12 +13,14 @@ using System.Threading.Tasks;
 namespace DynaBlaster.Class.PlayerScripts {
     class Player : MapObject {
 
-        private const float BOMB_PLACE_RATE = 0.5f;
+        private const float BOMB_PLACE_RATE = 0.4f;
+        private int maxBombsPlaced = 1;
 
         float speed = 200f;
         private Vector2 prevPos = new Vector2();
         private float bombTimer = 0f;
         private int bombRange = 1;
+        public static int bombCounter = 0;
 
         public Player(Vector2 pos) : base(pos) {
             this.label = "Player";
@@ -65,8 +67,9 @@ namespace DynaBlaster.Class.PlayerScripts {
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
                 
-                if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32)) {
+                if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32) && bombCounter < maxBombsPlaced) {
                     Map.mapObjects.Add(new Bomb(bombPos, this.bombRange));
+                    bombCounter += 1;
                     bombTimer = BOMB_PLACE_RATE;
                 }
             }
@@ -111,6 +114,9 @@ namespace DynaBlaster.Class.PlayerScripts {
                         // Check bonus type
                         if (bonus.bonusType == BonusType.BombRangeBonus) {
                             this.bombRange += bonus.bonusValue;
+                            mapObj.destroyed = true;
+                        }else if (bonus.bonusType == BonusType.MaxBombsPlacedBonus) {
+                            this.maxBombsPlaced += bonus.bonusValue;
                             mapObj.destroyed = true;
                         }
                     }

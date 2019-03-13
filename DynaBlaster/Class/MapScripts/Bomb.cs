@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DynaBlaster.Class.PlayerScripts;
 using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,6 +32,7 @@ namespace DynaBlaster.Class.MapScripts {
             
             if(timer <= 0f) {
                 explode();
+                Player.bombCounter--;
                 destroyed = true;
             }
 
@@ -109,7 +111,7 @@ namespace DynaBlaster.Class.MapScripts {
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y);
                             if(Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
-                                tempDirt.Destroy();
+                                tempDirt.startDestroyAnimation = true;
                             }
                             break;
                         }
@@ -129,7 +131,7 @@ namespace DynaBlaster.Class.MapScripts {
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
-                                tempDirt.Destroy();
+                                tempDirt.startDestroyAnimation = true;
                             }
                             break;
                         }
@@ -149,7 +151,7 @@ namespace DynaBlaster.Class.MapScripts {
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
-                                tempDirt.Destroy();
+                                tempDirt.startDestroyAnimation = true;
                             }
                             break;
                         }
@@ -169,7 +171,7 @@ namespace DynaBlaster.Class.MapScripts {
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
-                                tempDirt.Destroy();
+                                tempDirt.startDestroyAnimation = true;
                             }
                             break;
                         }

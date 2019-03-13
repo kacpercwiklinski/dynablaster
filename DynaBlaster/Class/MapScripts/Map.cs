@@ -78,6 +78,13 @@ namespace DynaBlaster.Class.MapScripts {
         }
 
         public void UpdateMap(GameTime gameTime) {
+            for (int x = 0; x < cols; x++) {
+                for (int y = 0; y < rows; y++) {
+                    if (blocks[x, y] != null) {
+                        blocks[x, y].Update(gameTime);
+                    }
+                }
+            }
 
             for (int i = 0; i < mapObjects.Count(); i++) {
                 mapObjects[i].Update(gameTime);

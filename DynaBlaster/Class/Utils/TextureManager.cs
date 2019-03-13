@@ -24,7 +24,7 @@ namespace DynaBlaster.Class.Utils {
         public Texture2D block;
         public Texture2D wall;
         public Texture2D grass;
-        public Texture2D dirt;
+        public List<Texture2D> dirt = new List<Texture2D>();
 
         public List<Texture2D> explosionCenter = new List<Texture2D>();
         public List<Texture2D> explosionHorizontalCenter = new List<Texture2D>();
@@ -47,12 +47,21 @@ namespace DynaBlaster.Class.Utils {
             block = theContent.Load<Texture2D>("Object/MapObject/block/block");
             wall = theContent.Load<Texture2D>("Object/MapObject/block/wall");
             grass = theContent.Load<Texture2D>("Object/MapObject/block/grass");
-            dirt = theContent.Load<Texture2D>("Object/MapObject/block/dirt");
+
+            // Dirt textures
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_0"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_1"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_2"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_3"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_4"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_5"));
+            dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_6"));
 
             // Object
             player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
 
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/bombRangeBonus"));
+            bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/MaxBombsPlacedBonus"));
 
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_0"));
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_1"));

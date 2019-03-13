@@ -7,8 +7,9 @@ using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 
 namespace DynaBlaster.Class.MapScripts {
-    public enum BonusType { BombRangeBonus, BombNumberBonus}
-    abstract class Bonus : MapObject {
+    public enum BonusType { BombRangeBonus, MaxBombsPlacedBonus}
+
+    class Bonus : MapObject {
         public BonusType bonusType;
         public int bonusValue = 0;
         private Vector2 positionSpacing;
@@ -18,8 +19,18 @@ namespace DynaBlaster.Class.MapScripts {
             this.walkable = true;
             positionSpacing = GridManager.getTextureSpacing(Game1.textureManager.bonus.First());
             this.pos = new Vector2(pos.X + positionSpacing.X, pos.Y + positionSpacing.Y);
-            this.texture = Game1.textureManager.bonus.First();
-            this.bonusType = BonusType.BombRangeBonus;
+            switch (Randomizer.random.Next(0, 2)) {
+                case 0:
+                    this.bonusType = BonusType.BombRangeBonus;
+                    this.texture = Game1.textureManager.bonus[0];
+                    this.bonusValue = 1;
+                    break;
+                case 1:
+                    this.bonusType = BonusType.MaxBombsPlacedBonus;
+                    this.texture = Game1.textureManager.bonus[1];
+                    this.bonusValue = 1;
+                    break;
+            }    
             setupBoundingBox();
         }
     }
