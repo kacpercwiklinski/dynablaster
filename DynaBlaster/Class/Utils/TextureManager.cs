@@ -22,11 +22,13 @@ namespace DynaBlaster.Class.Utils {
         public List<Texture2D> playerLeft = new List<Texture2D>();
         public List<Texture2D> playerRight = new List<Texture2D>();
         public List<Texture2D> playerUp = new List<Texture2D>();
+        public List<Texture2D> playerDead = new List<Texture2D>();
         public List<Texture2D> bomb = new List<Texture2D>();
         public List<Texture2D> bonus = new List<Texture2D>();
         public Texture2D block;
         public Texture2D wall;
         public Texture2D grass;
+        public Texture2D grassShadow;
         public List<Texture2D> dirt = new List<Texture2D>();
 
         public List<Texture2D> explosionCenter = new List<Texture2D>();
@@ -50,6 +52,7 @@ namespace DynaBlaster.Class.Utils {
             block = theContent.Load<Texture2D>("Object/MapObject/block/block");
             wall = theContent.Load<Texture2D>("Object/MapObject/block/wall");
             grass = theContent.Load<Texture2D>("Object/MapObject/block/grass");
+            grassShadow = theContent.Load<Texture2D>("Object/MapObject/block/grassShadow");
 
             // Dirt textures
             dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_0"));
@@ -76,6 +79,15 @@ namespace DynaBlaster.Class.Utils {
             playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_0"));
             playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_1"));
             playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_2"));
+
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_0"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_1"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_2"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_3"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_4"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_5"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_6"));
+            playerDead.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_dead_7"));
 
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/bombRangeBonus"));
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/MaxBombsPlacedBonus"));

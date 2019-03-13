@@ -50,7 +50,7 @@ namespace DynaBlaster.Class.MapScripts {
         float counter = 0f;
         public float livingTime = 0.5f; 
         public List<Wing> wings = new List<Wing>();
-
+        public List<Rectangle> boundingBoxes;
 
         public Explosion(Vector2 pos, int range) : base(pos) {
             this.label = "Explosion";
@@ -58,17 +58,22 @@ namespace DynaBlaster.Class.MapScripts {
             this.texture = Game1.textureManager.explosionCenter.First();
             setupBoundingBox();
 
-            wings.Add(new Wing(this.pos, Wing.WingSide.Right, this.range));
-            wings.Add(new Wing(this.pos, Wing.WingSide.Left, this.range));
-            wings.Add(new Wing(this.pos, Wing.WingSide.Top, this.range));
-            wings.Add(new Wing(this.pos, Wing.WingSide.Bottom, this.range));
+            this.boundingBoxes = new List<Rectangle>();
+            this.boundingBoxes.Add(this.boundingBox);
+
+            wings.Add(new Wing(this.pos, Wing.WingSide.Right, this.range, this.boundingBoxes));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Left, this.range, this.boundingBoxes));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Top, this.range, this.boundingBoxes));
+            wings.Add(new Wing(this.pos, Wing.WingSide.Bottom, this.range, this.boundingBoxes));
         }
 
         public override void Update(GameTime gameTime) {
             handleTimers(gameTime);
 
+            //Animate center of explosion
             Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionCenter, 0.125f, ref counter, true);
 
+            // Update each wing state
             wings.ForEach(wing => wing.Update(gameTime));
 
             base.Update(gameTime);
@@ -76,6 +81,13 @@ namespace DynaBlaster.Class.MapScripts {
 
         public override void Draw(SpriteBatch spriteBatch) {
             wings.ForEach(wing => wing.Draw(spriteBatch));
+
+            // Draw bounding boxes in debug mode
+            if (Game1.debugMode) {
+                this.boundingBoxes.ForEach(boundingBox => {
+                    LineBatch.drawBoundingBox(boundingBox, spriteBatch);
+                });
+            }
 
             base.Draw(spriteBatch);
         }
@@ -95,7 +107,7 @@ namespace DynaBlaster.Class.MapScripts {
             public List<WingPart> wingParts = new List<WingPart>();
 
 
-            public Wing(Vector2 parentPos, WingSide wingSide, int range) {
+            public Wing(Vector2 parentPos, WingSide wingSide, int range, List<Rectangle> parentBoundingBoxes) {
                 this.parentPos = new Vector2(parentPos.X,parentPos.Y);
                 centerOfExplosion = new Vector2(parentPos.X + Game1.textureManager.explosionCenter.First().Width/2, parentPos.Y + Game1.textureManager.explosionCenter.First().Height / 2);
                 this.wingSide = wingSide;
@@ -105,9 +117,11 @@ namespace DynaBlaster.Class.MapScripts {
                     for (int i = 1; i <= range; i++) {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X + i * 32,(int) parentPos.Y, 32,32));
                             break;
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X + i * 32, (int)parentPos.Y, 32, 32));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X + i * 32, this.centerOfExplosion.Y);
                             if(Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
@@ -117,17 +131,21 @@ namespace DynaBlaster.Class.MapScripts {
                         }
                         if (i == range) {
                                 wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionRightEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X + i * 32, (int)parentPos.Y, 32, 32));
                         } else {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X + i * 32, parentPos.Y), "ExplosionHorizontalCenter"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X + i * 32, (int)parentPos.Y, 32, 32));
                         }
                     }
                 }else if (wingSide == WingSide.Left) {
                     for (int i = 1; i <= range; i++) {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X - i * 32, (int)parentPos.Y, 32, 32));
                             break;
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X - i * 32, (int)parentPos.Y, 32, 32));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X - i * 32, this.centerOfExplosion.Y);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
@@ -137,17 +155,21 @@ namespace DynaBlaster.Class.MapScripts {
                         }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionLeftEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X - i * 32, (int)parentPos.Y, 32, 32));
                         } else {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X - i * 32, parentPos.Y), "ExplosionHorizontalCenter"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X - i * 32, (int)parentPos.Y, 32, 32));
                         }
                     }
                 } else if (wingSide == WingSide.Top) {
                     for (int i = 1; i <= range; i++) {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y - i * 32, 32, 32));
                             break;
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y - i * 32, 32, 32));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y - i * 32);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
@@ -157,17 +179,21 @@ namespace DynaBlaster.Class.MapScripts {
                         }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(this.parentPos.X , this.parentPos.Y - i * 32), "ExplosionTopEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y - i * 32, 32, 32));
                         } else {
                             wingParts.Add(new WingPart(new Vector2(this.parentPos.X , this.parentPos.Y - i * 32), "ExplosionVerticalCenter"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y - i * 32, 32, 32));
                         }
                     }
                 } else if (wingSide == WingSide.Bottom) {
                     for (int i = 1; i <= range; i++) {
                         if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32), "Block Wall Explosion")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y + i * 32, 32, 32));
                             break;
                         } else if (GridManager.checkIfBlockExist(new Vector2(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32), "Dirt")) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y + i * 32, 32, 32));
                             Vector2 blockPos = GridManager.GetOnGridPosition(this.centerOfExplosion.X, this.centerOfExplosion.Y + i * 32);
                             if (Map.blocks[(int)blockPos.X, (int)blockPos.Y].label.Equals("Dirt")) {
                                 Dirt tempDirt = (Dirt)Map.blocks[(int)blockPos.X, (int)blockPos.Y];
@@ -177,8 +203,10 @@ namespace DynaBlaster.Class.MapScripts {
                         }
                         if (i == range) {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionBottomEnd"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y + i * 32, 32, 32));
                         } else {
                             wingParts.Add(new WingPart(new Vector2(parentPos.X, parentPos.Y + i * 32), "ExplosionVerticalCenter"));
+                            parentBoundingBoxes.Add(new Rectangle((int)parentPos.X, (int)parentPos.Y + i * 32, 32, 32));
                         }
                     }
                 }

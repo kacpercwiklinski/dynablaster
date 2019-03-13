@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,8 @@ namespace DynaBlaster.Class.MapScripts {
             if (Game1.debugMode) LineBatch.drawBoundingBox(this.boundingBox, spriteBatch);
         }
 
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(GameTime gameTime) {
+        }
+        
     }
 }

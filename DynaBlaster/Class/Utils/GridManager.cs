@@ -21,9 +21,9 @@ namespace DynaBlaster.Class.Utils {
         public static Vector2 GetOnGridPosition(float pixelX, float pixelY) {
             for (int x = 0; x < Map.blocks.GetLength(0); x++) {
                 for (int y = 0; y < Map.blocks.GetLength(1); y++) {
-                    if (pixelX > Map.blocks[x, y].pos.X &&
+                    if (pixelX >= Map.blocks[x, y].pos.X &&
                        pixelX < Map.blocks[x, y].pos.X + Map.blockSize &&
-                       pixelY > Map.blocks[x, y].pos.Y &&
+                       pixelY >= Map.blocks[x, y].pos.Y &&
                        pixelY < Map.blocks[x, y].pos.Y + Map.blockSize) return new Vector2(x, y);
                 }
             }

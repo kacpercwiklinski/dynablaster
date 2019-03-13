@@ -1,4 +1,5 @@
 ﻿using DynaBlaster.Class.MapScripts;
+using DynaBlaster.Class.Screen;
 using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,6 +16,8 @@ namespace DynaBlaster.Class.PlayerScripts {
 
         private enum PlayerDirection { Left, Right, Up, Down }
 
+        private GameScreen gameScreen;
+
         private const float BOMB_PLACE_RATE = 0.4f;
         private int maxBombsPlaced = 1;
         private PlayerDirection playerDirection = PlayerDirection.Down;
@@ -26,10 +29,13 @@ namespace DynaBlaster.Class.PlayerScripts {
         public static int bombCounter = 0;
         private float animatorCounter = 0f;
         private Boolean moving = false;
+        public Boolean alive = true;
 
-        public Player(Vector2 pos) : base(pos) {
+        public Player(Vector2 pos, GameScreen gameScreen) : base(pos) {
             this.label = "Player";
             this.texture = Game1.textureManager.playerDown.First();
+            this.gameScreen = gameScreen;
+
             setupBoundingBox();
         }
         
@@ -47,15 +53,21 @@ namespace DynaBlaster.Class.PlayerScripts {
         }
 
         private void animatePlayer(GameTime gameTime) {
-            if (moving) {
+            if (moving && alive) {
                 if (playerDirection.Equals(PlayerDirection.Down)) {
                     Animator.animate(gameTime, ref this.texture, Game1.textureManager.playerDown, 0.125f, ref this.animatorCounter, true);
-                }else if (playerDirection.Equals(PlayerDirection.Left)) {
+                } else if (playerDirection.Equals(PlayerDirection.Left)) {
                     Animator.animate(gameTime, ref this.texture, Game1.textureManager.playerLeft, 0.125f, ref this.animatorCounter, true);
                 } else if (playerDirection.Equals(PlayerDirection.Right)) {
                     Animator.animate(gameTime, ref this.texture, Game1.textureManager.playerRight, 0.125f, ref this.animatorCounter, true);
                 } else if (playerDirection.Equals(PlayerDirection.Up)) {
                     Animator.animate(gameTime, ref this.texture, Game1.textureManager.playerUp, 0.125f, ref this.animatorCounter, true);
+                }
+            } else if (!alive) {
+                Animator.animate(gameTime, ref this.texture, Game1.textureManager.playerDead, 0.125f, ref this.animatorCounter, true);
+                // Start new game after player death animation
+                if (this.texture.Equals(Game1.textureManager.playerDead.Last())) {
+                    this.gameScreen.StartGame();
                 }
             } else {
                 if (playerDirection.Equals(PlayerDirection.Down)) {
@@ -71,7 +83,6 @@ namespace DynaBlaster.Class.PlayerScripts {
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
-           
             base.Draw(spriteBatch);
         }
 
@@ -110,7 +121,6 @@ namespace DynaBlaster.Class.PlayerScripts {
                 Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
-                
                 if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32) && bombCounter < maxBombsPlaced) {
                     Map.mapObjects.Add(new Bomb(bombPos, this.bombRange));
                     bombCounter += 1;
@@ -118,11 +128,12 @@ namespace DynaBlaster.Class.PlayerScripts {
                 }
             }
 
-            this.pos.X += dx;
-            this.pos.Y += dy;
-            
+            if (this.alive) {
+                this.pos.X += dx;
+                this.pos.Y += dy;
 
-            setupBoundingBox();
+                setupBoundingBox();
+            }
         }
 
         public override void setupBoundingBox() {
@@ -166,6 +177,14 @@ namespace DynaBlaster.Class.PlayerScripts {
                         }
                     }
                 }
+            });
+
+            Map.explosions.ForEach(explosion => {
+                explosion.boundingBoxes.ForEach(bb => {
+                    if (this.boundingBox.Intersects(bb)) {
+                        this.alive = false;
+                    }
+                });
             });
         }
         

@@ -13,36 +13,35 @@ using System.Threading.Tasks;
 
 namespace DynaBlaster.Class.Screen
 {
-    public enum GameMode { Single, Multi }
     class GameScreen : Screen
     {
         Map map;
-        List<Player> players = new List<Player>();
-        GameMode gameMode = GameMode.Single;
+        Player player;
 
         public GameScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent){
-            map = new Map();
-            players.Add(new Player(Map.blocks[(int)map.spawnPoints[0].X, (int)map.spawnPoints[0].Y].pos));
+            this.StartGame();
         }
 
         public override void Update(GameTime gameTime){
             map.UpdateMap(gameTime);
 
-            players.ForEach((player) => player.Update(gameTime));
+            player.Update(gameTime);
             
             base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch){
             map.DrawMap(spriteBatch);
-            players.ForEach((player) => player.Draw(spriteBatch));
+            player.Draw(spriteBatch);
 
             base.Draw(spriteBatch);
         }
         
-        public void StartGame(GameMode gameMode){
-            this.gameMode = gameMode;
+        public void StartGame(){
+            Map.mapObjects = new List<MapObject>();
+            Map.explosions = new List<Explosion>();
             map = new Map();
+            player = new Player(Map.blocks[(int)map.spawnPoints[0].X, (int)map.spawnPoints[0].Y].pos, this);
         }
 
     }

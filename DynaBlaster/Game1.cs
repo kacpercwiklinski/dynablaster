@@ -90,10 +90,7 @@ namespace DynaBlaster
             if (chosenOption.label.Equals("Play singleplayer"))
             {
                 mCurrentScreen = mGameScreen;
-                mGameScreen.StartGame(GameMode.Single);
-            } else if (chosenOption.label.Equals("Play multiplayer")) {
-                mCurrentScreen = mGameScreen;
-                mGameScreen.StartGame(GameMode.Multi);
+                mGameScreen.StartGame();
             } else if (chosenOption.label.Equals("Exit"))
             {
                 Exit();
