@@ -18,7 +18,10 @@ namespace DynaBlaster.Class.Utils {
 
 
         //Object
-        public List<Texture2D> player = new List<Texture2D>();
+        public List<Texture2D> playerDown = new List<Texture2D>();
+        public List<Texture2D> playerLeft = new List<Texture2D>();
+        public List<Texture2D> playerRight = new List<Texture2D>();
+        public List<Texture2D> playerUp = new List<Texture2D>();
         public List<Texture2D> bomb = new List<Texture2D>();
         public List<Texture2D> bonus = new List<Texture2D>();
         public Texture2D block;
@@ -58,7 +61,21 @@ namespace DynaBlaster.Class.Utils {
             dirt.Add(theContent.Load<Texture2D>("Object/MapObject/block/dirt_6"));
 
             // Object
-            player.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_0"));
+            playerDown.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_down_0"));
+            playerDown.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_down_1"));
+            playerDown.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_down_2"));
+
+            playerUp.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_up_0"));
+            playerUp.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_up_1"));
+            playerUp.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_up_2"));
+
+            playerLeft.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_left_0"));
+            playerLeft.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_left_1"));
+            playerLeft.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_left_2"));
+
+            playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_0"));
+            playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_1"));
+            playerRight.Add(theContent.Load<Texture2D>("Object/MapObject/player/player_right_2"));
 
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/bombRangeBonus"));
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/MaxBombsPlacedBonus"));
