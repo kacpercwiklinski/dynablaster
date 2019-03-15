@@ -26,7 +26,7 @@ namespace DynaBlaster.Class.PlayerScripts {
         private Vector2 prevPos = new Vector2();
         private float bombTimer = 0f;
         private int bombRange = 1;
-        public static int bombCounter = 0;
+        public static int bombCounter;
         private float animatorCounter = 0f;
         private Boolean moving = false;
         public Boolean alive = true;

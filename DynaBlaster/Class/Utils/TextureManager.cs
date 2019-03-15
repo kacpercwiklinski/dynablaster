@@ -96,7 +96,6 @@ namespace DynaBlaster.Class.Utils {
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_1"));
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_2"));
 
-
             explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_4"));
             explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_2"));
             explosionCenter.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionCenter_1"));

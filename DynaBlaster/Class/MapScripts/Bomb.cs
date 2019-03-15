@@ -29,7 +29,7 @@ namespace DynaBlaster.Class.MapScripts {
 
         public override void Update(GameTime gameTime) {
             upCounter += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Animator.animate(gameTime, ref this.texture, Game1.textureManager.bomb, 1f, ref upCounter, true);
+            Animator.animate(gameTime, ref this.texture, Game1.textureManager.bomb, 0.25f, ref upCounter, true);
 
             timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             
@@ -59,7 +59,7 @@ namespace DynaBlaster.Class.MapScripts {
 
         int range;
         float counter = 0f;
-        public float livingTime = 0.5f; 
+        public float livingTime = 0.25f; 
         public List<Wing> wings = new List<Wing>();
         public List<Rectangle> boundingBoxes;
 
@@ -82,7 +82,7 @@ namespace DynaBlaster.Class.MapScripts {
             handleTimers(gameTime);
 
             //Animate center of explosion
-            Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionCenter, 0.125f, ref counter, true);
+            Animator.animate(gameTime, ref this.texture, Game1.textureManager.explosionCenter, 0.0625f, ref counter, true);
 
             // Update each wing state
             wings.ForEach(wing => wing.Update(gameTime));
@@ -238,7 +238,7 @@ namespace DynaBlaster.Class.MapScripts {
 
                 Texture2D texture;
                 public float animatorCounter = 0f;
-                private float animationFrameTime = 0.125f;
+                private float animationFrameTime = 0.0625f;
 
                 public WingPart(Vector2 pos, String partLabel) {
                     this.partLabel = partLabel;
