@@ -122,7 +122,7 @@ namespace DynaBlaster.Class.PlayerScripts {
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 
                 if (!Map.mapObjects.Select(bomb => bomb.pos).Any((bomb) => Vector2.Distance(bomb,bombPos) < 32) && bombCounter < maxBombsPlaced) {
-                    Map.mapObjects.Add(new Bomb(bombPos, this.bombRange));
+                    Map.mapObjects.Add(new Bomb(bombPos, this.bombRange, this));
                     bombCounter += 1;
                     bombTimer = BOMB_PLACE_RATE;
                 }
@@ -176,6 +176,8 @@ namespace DynaBlaster.Class.PlayerScripts {
                             mapObj.destroyed = true;
                         }
                     }
+                }else if (this.boundingBox.Intersects(mapObj.boundingBox) && mapObj.walkable == false) {
+                    this.pos = prevPos;
                 }
             });
 

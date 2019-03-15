@@ -16,12 +16,15 @@ namespace DynaBlaster.Class.MapScripts {
         float upCounter = 0f;
         private Vector2 positionSpacing;
         private int bombRange = 1;
+        private Boolean stateChanged = false;
+        private Player player;
 
-        public Bomb(Vector2 pos, int bombRange) : base(pos) {
+        public Bomb(Vector2 pos, int bombRange, Player player) : base(pos) {
             positionSpacing = GridManager.getTextureSpacing(Game1.textureManager.bomb.First());
             this.pos = new Vector2(pos.X + positionSpacing.X, pos.Y + positionSpacing.Y);
             this.texture = Game1.textureManager.bomb.First();
             this.bombRange = bombRange;
+            this.player = player;
         }
 
         public override void Update(GameTime gameTime) {
@@ -34,6 +37,14 @@ namespace DynaBlaster.Class.MapScripts {
                 explode();
                 Player.bombCounter--;
                 destroyed = true;
+            }
+
+            // Make bomb unwalkable when placed
+            if (this.boundingBox.Intersects(player.boundingBox) && !this.stateChanged){
+                this.walkable = true;
+            } else {
+                this.walkable = false;
+                this.stateChanged = true;
             }
 
             base.Update(gameTime);
