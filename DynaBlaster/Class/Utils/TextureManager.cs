@@ -27,6 +27,12 @@ namespace DynaBlaster.Class.Utils {
         public List<Texture2D> bonus = new List<Texture2D>();
         public Texture2D block;
         public Texture2D wall;
+        public Texture2D wall_left;
+        public Texture2D wall_right;
+        public Texture2D wall_left_top_corner;
+        public Texture2D wall_right_top_corner;
+        public Texture2D wall_top_0;
+        public Texture2D wall_top_1;
         public Texture2D grass;
         public Texture2D grassShadow;
         public List<Texture2D> dirt = new List<Texture2D>();
@@ -51,6 +57,12 @@ namespace DynaBlaster.Class.Utils {
             //Object
             block = theContent.Load<Texture2D>("Object/MapObject/block/block");
             wall = theContent.Load<Texture2D>("Object/MapObject/block/wall");
+            wall_left = theContent.Load<Texture2D>("Object/MapObject/block/wall_left");
+            wall_right = theContent.Load<Texture2D>("Object/MapObject/block/wall_right");
+            wall_left_top_corner = theContent.Load<Texture2D>("Object/MapObject/block/wall_left_top_corner");
+            wall_right_top_corner = theContent.Load<Texture2D>("Object/MapObject/block/wall_right_top_corner");
+            wall_top_0 = theContent.Load<Texture2D>("Object/MapObject/block/wall_top_0");
+            wall_top_1 = theContent.Load<Texture2D>("Object/MapObject/block/wall_top_1");
             grass = theContent.Load<Texture2D>("Object/MapObject/block/grass");
             grassShadow = theContent.Load<Texture2D>("Object/MapObject/block/grassShadow");
 

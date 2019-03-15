@@ -16,7 +16,9 @@ namespace DynaBlaster.Class.MapScripts {
         public Vector2[] spawnPoints = new Vector2[4];
 
         public const int blockSize = 42;
-        int cols, rows;
+        public static int cols = Game1.WIDTH / blockSize / 2;
+        public static int rows = Game1.HEIGHT / blockSize;
+
         Random random;
 
         public static MapObject[,] blocks;
@@ -25,9 +27,6 @@ namespace DynaBlaster.Class.MapScripts {
 
         public Map() {
             random = new Random();
-
-            cols = Game1.WIDTH  / blockSize / 2;
-            rows = Game1.HEIGHT / blockSize;
 
             blocks = new MapObject[cols, rows];
 
@@ -43,7 +42,7 @@ namespace DynaBlaster.Class.MapScripts {
             for(int x = 0; x < cols; x++) {
                 for (int y = 0; y < rows; y++) {
                     if(x == 0 || x == cols-1 || y == 0 || y == rows - 1) {
-                        blocks[x, y] = new Wall(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
+                        blocks[x, y] = new Wall(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize), new Vector2(x,y));
                     }else if(x % 2 == 0 && y % 2 == 0) {
                         blocks[x, y] = new Block(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     } else {
