@@ -1,5 +1,6 @@
 ﻿using DynaBlaster.Class.MapScripts;
 using DynaBlaster.Class.Screen;
+using DynaBlaster.Class.UiScripts;
 using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,7 +41,7 @@ namespace DynaBlaster.Class.PlayerScripts {
         }
         
         public override void Update(GameTime gameTime) {
-
+            checkGameConditions();
             handleTimers(gameTime);
 
             animatePlayer(gameTime);
@@ -50,6 +51,15 @@ namespace DynaBlaster.Class.PlayerScripts {
             handleCollisions(gameTime);
 
             base.Update(gameTime);
+        }
+
+        private void checkGameConditions() {
+            if (Watch.timeEnds) {
+                this.alive = false;
+            }else if (LivesComponent.lives < 0) {
+                // TODO: Gameover
+                this.gameScreen.invokeScreenEvent();
+            }
         }
 
         private void animatePlayer(GameTime gameTime) {
@@ -68,6 +78,7 @@ namespace DynaBlaster.Class.PlayerScripts {
                 // Start new game after player death animation
                 if (this.texture.Equals(Game1.textureManager.playerDead.Last())) {
                     this.gameScreen.StartGame();
+                    LivesComponent.lives--;
                 }
             } else {
                 if (playerDirection.Equals(PlayerDirection.Down)) {
@@ -117,7 +128,7 @@ namespace DynaBlaster.Class.PlayerScripts {
 
             if (!state.IsKeyDown(Keys.Right) && !state.IsKeyDown(Keys.Up) && !state.IsKeyDown(Keys.Left) && !state.IsKeyDown(Keys.Down)) moving = false;
 
-            if (state.IsKeyDown(Keys.Space) && bombTimer <= 0f) {
+            if (state.IsKeyDown(Keys.Space) && bombTimer <= 0f && this.alive) {
                 Vector2 bombPos = GridManager.GetOnGridPosition(this.pos.X + this.texture.Width/2 ,this.pos.Y + this.texture.Height/2);
                 bombPos = GridManager.absolutePosition((int)bombPos.X, (int)bombPos.Y);
 

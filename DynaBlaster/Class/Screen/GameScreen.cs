@@ -49,5 +49,9 @@ namespace DynaBlaster.Class.Screen
             Player.bombCounter = 0;
         }
 
+        public void invokeScreenEvent() {
+            ScreenEvent.Invoke(this, new EventArgs());
+        }
+
     }
 }

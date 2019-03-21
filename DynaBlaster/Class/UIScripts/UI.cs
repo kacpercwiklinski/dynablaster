@@ -10,7 +10,6 @@ namespace DynaBlaster.Class.UiScripts {
     public class UI {
 
         public static Vector2 barPos = new Vector2(Game1.WIDTH / 2 - 448, 0);
-            
         Bar bar;
 
         public UI() {

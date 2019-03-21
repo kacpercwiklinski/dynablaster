@@ -14,21 +14,19 @@ namespace DynaBlaster.Class.UiScripts {
         Vector2 secondsPos_0 = new Vector2(UI.barPos.X + 417,UI.barPos.Y + 32);
         Vector2 secondsPos_1 = new Vector2(UI.barPos.X + 439,UI.barPos.Y + 32);
 
-        public Boolean timeEnds = false;
+        public static Boolean timeEnds = false;
 
-        int minutes;
-        int seconds;
+        public static int minutes = 3;
+        public static int seconds = 0;
 
         float counter = 0f;
 
         public Watch() {
-            this.minutes = 0;
-            this.seconds = 2;
+
         }
 
         public Watch(Vector2 position) : base(position) {
-            this.minutes = 0;
-            this.seconds = 2;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
@@ -50,8 +48,6 @@ namespace DynaBlaster.Class.UiScripts {
         }
 
         public override void Update(GameTime gameTime) {
-            Debug.WriteLine(timeEnds);
-
             updateWatch(gameTime);
 
             base.Update(gameTime);
@@ -61,17 +57,17 @@ namespace DynaBlaster.Class.UiScripts {
             this.counter += (float)gameTime.ElapsedGameTime.TotalSeconds;
             
             if (counter > 1f) {
-                this.seconds--;
+                Watch.seconds--;
                 counter = 0;
             }
 
-            if(this.seconds < 0 && this.minutes > 0) {
-                this.minutes--;
-                this.seconds = 59;
-            }else if(this.seconds < 0 && this.minutes == 0) {
-                this.minutes = 0;
-                this.seconds = 0;
-                this.timeEnds = true;
+            if(Watch.seconds < 0 && Watch.minutes > 0) {
+                Watch.minutes--;
+                Watch.seconds = 59;
+            }else if(Watch.seconds < 0 && Watch.minutes == 0) {
+                Watch.minutes = 0;
+                Watch.seconds = 0;
+                Watch.timeEnds = true;
             }
         }
         

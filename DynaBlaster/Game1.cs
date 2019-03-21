@@ -74,25 +74,22 @@ namespace DynaBlaster
             mCurrentScreen = mGameScreen;
         }
 
-        private void GameOverScreenEvent(object sender, EventArgs e)
-        {
+        private void GameOverScreenEvent(object sender, EventArgs e){
             mCurrentScreen = mMenuScreen;
         }
 
-        private void GameScreenEvent(object sender, EventArgs e)
-        {
-            mCurrentScreen = mGameOverScreen;
+        private void GameScreenEvent(object sender, EventArgs e){
+            // Game Over
+            mCurrentScreen = mMenuScreen;
         }
 
-        private void MenuScreenEvent(object sender, EventArgs e)
-        {
+        private void MenuScreenEvent(object sender, EventArgs e){
+
             Option chosenOption = mMenuScreen.options.Find((option) => option.active);
-            if (chosenOption.label.Equals("Play singleplayer"))
-            {
+            if (chosenOption.label.Equals("Play singleplayer")){
                 mCurrentScreen = mGameScreen;
                 mGameScreen.StartGame();
-            } else if (chosenOption.label.Equals("Exit"))
-            {
+            } else if (chosenOption.label.Equals("Exit")){
                 Exit();
             }
         }
