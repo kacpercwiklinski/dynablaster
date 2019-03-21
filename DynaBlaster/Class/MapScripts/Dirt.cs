@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DynaBlaster.Class.UiScripts;
 using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,6 +33,7 @@ namespace DynaBlaster.Class.MapScripts {
 
             if(this.texture.Equals(Game1.textureManager.dirt.Last())) {
                 this.Destroy();
+                ScoreComponent.score += 100;
             }
         }
 

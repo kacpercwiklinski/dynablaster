@@ -1,4 +1,5 @@
 ﻿using DynaBlaster.Class.Screen;
+using DynaBlaster.Class.UiScripts;
 using DynaBlaster.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -88,6 +89,8 @@ namespace DynaBlaster
             Option chosenOption = mMenuScreen.options.Find((option) => option.active);
             if (chosenOption.label.Equals("Play singleplayer")){
                 mCurrentScreen = mGameScreen;
+                LivesComponent.lives = 3;
+                ScoreComponent.score = 0;
                 mGameScreen.StartGame();
             } else if (chosenOption.label.Equals("Exit")){
                 Exit();

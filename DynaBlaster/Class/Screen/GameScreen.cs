@@ -22,6 +22,8 @@ namespace DynaBlaster.Class.Screen
 
         public GameScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent){
             this.StartGame();
+            ScoreComponent.score = 0;
+            LivesComponent.lives = 3;
         }
 
         public override void Update(GameTime gameTime){

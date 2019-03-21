@@ -31,7 +31,7 @@ namespace DynaBlaster.Class.UiScripts {
         private void setupPositions() {
             for (int i = 0; i < 12; i++) {
                 if (i == 0) {
-                    positions[i] = new Vector2(UI.barPos.X + 848, UI.barPos.Y + 32);
+                    positions[i] = new Vector2(UI.barPos.X + 284, UI.barPos.Y + 32);
                 } else {
                     positions[i] = new Vector2(positions[i - 1].X - 21, positions[i - 1].Y);
                 }
