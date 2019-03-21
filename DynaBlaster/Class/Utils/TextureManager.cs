@@ -164,5 +164,10 @@ namespace DynaBlaster.Class.Utils {
             numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/8"));
             numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/9"));
         }
+
+        public int charToFontNumberIndex(char number) {
+            return (int)char.GetNumericValue(number);
+        }
+
     }
 }

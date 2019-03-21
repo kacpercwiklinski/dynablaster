@@ -11,6 +11,7 @@ namespace DynaBlaster.Class.UiScripts {
 
         Watch watch;
         LivesComponent livesComponent;
+        ScoreComponent scoreComponent;
 
         public Bar(Vector2 position) : base(position) {
             this.texture = Game1.textureManager.bar;
@@ -21,12 +22,14 @@ namespace DynaBlaster.Class.UiScripts {
             Watch.seconds = 0;
 
             livesComponent = new LivesComponent();
+            scoreComponent = new ScoreComponent();
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(this.texture, this.position, Color.White);
             watch.Draw(spriteBatch);
             livesComponent.Draw(spriteBatch);
+            scoreComponent.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }
 
