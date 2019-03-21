@@ -12,12 +12,12 @@ namespace DynaBlaster.Class.MapScripts {
     class Map {
         const int DIRT_SPAWN_CHANCE = 35;
 
-        public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,0);
+        public static Vector2 mapPosition = new Vector2(Game1.WIDTH/4,blockSize*2);
         public Vector2[] spawnPoints = new Vector2[4];
 
         public const int blockSize = 42;
-        public static int cols = Game1.WIDTH / blockSize / 2;
-        public static int rows = Game1.HEIGHT / blockSize;
+        public static int cols = Game1.WIDTH  / blockSize / 2;
+        public static int rows = (Game1.HEIGHT - (blockSize * 2)) / blockSize;
 
         Random random;
 

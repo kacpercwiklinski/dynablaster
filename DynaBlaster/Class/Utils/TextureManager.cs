@@ -48,6 +48,11 @@ namespace DynaBlaster.Class.Utils {
         // Debug
         public Texture2D debugPoint;
 
+        // UI
+        public Texture2D bar;
+        public List<Texture2D> numbers_font = new List<Texture2D>();
+
+
         public TextureManager(ContentManager theContent) {
             loadTextures(theContent);
         }
@@ -145,6 +150,19 @@ namespace DynaBlaster.Class.Utils {
             
             // Debug
             debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");
+
+            // UI
+            bar = theContent.Load<Texture2D>("Object/UI/bar");
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/0"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/1"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/2"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/3"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/4"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/5"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/6"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/7"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/8"));
+            numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/9"));
         }
     }
 }

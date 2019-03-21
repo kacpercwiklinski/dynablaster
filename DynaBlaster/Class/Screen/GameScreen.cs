@@ -1,5 +1,6 @@
 ﻿using DynaBlaster.Class.MapScripts;
 using DynaBlaster.Class.PlayerScripts;
+using DynaBlaster.Class.UiScripts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace DynaBlaster.Class.Screen
     class GameScreen : Screen
     {
         Map map;
+        UI ui;
         Player player;
 
         public GameScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent){
@@ -24,7 +26,7 @@ namespace DynaBlaster.Class.Screen
 
         public override void Update(GameTime gameTime){
             map.UpdateMap(gameTime);
-
+            ui.Update(gameTime);
             player.Update(gameTime);
             
             base.Update(gameTime);
@@ -32,12 +34,14 @@ namespace DynaBlaster.Class.Screen
 
         public override void Draw(SpriteBatch spriteBatch){
             map.DrawMap(spriteBatch);
+            ui.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
             base.Draw(spriteBatch);
         }
         
         public void StartGame(){
+            ui = new UI();
             Map.mapObjects = new List<MapObject>();
             Map.explosions = new List<Explosion>();
             map = new Map();

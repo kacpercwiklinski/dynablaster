@@ -56,6 +56,10 @@
     <Compile Include="Class\Screen\MenuScreen.cs" />
     <Compile Include="Class\Screen\Screen.cs" />
     <Compile Include="Class\Screen\SplashScreen.cs" />
+    <Compile Include="Class\UIScripts\Bar.cs" />
+    <Compile Include="Class\UIScripts\UI.cs" />
+    <Compile Include="Class\UIScripts\UiObject.cs" />
+    <Compile Include="Class\UIScripts\Watch.cs" />
     <Compile Include="Class\Utils\Animator.cs" />
     <Compile Include="Class\Utils\AudioManager.cs" />
     <Compile Include="Class\Utils\GridManager.cs" />
