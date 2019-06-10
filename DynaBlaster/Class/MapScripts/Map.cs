@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DynaBlaster.Class.PlayerScripts;
+using DynaBlaster.Class.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,8 @@ namespace DynaBlaster.Class.MapScripts {
         public const int blockSize = 42;
         public static int cols = Game1.WIDTH  / blockSize / 2;
         public static int rows = (Game1.HEIGHT - (blockSize * 2)) / blockSize;
+
+        public static bool endDoorsSpawned = false;
 
         Random random;
 
@@ -47,9 +51,10 @@ namespace DynaBlaster.Class.MapScripts {
                         blocks[x, y] = new Block(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
                     } else {
                         blocks[x, y] = new Grass(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
+
                         Vector2 tempVector = new Vector2(x, y);
-                        if(random.Next(0,100) > DIRT_SPAWN_CHANCE && !(tempVector.Equals(spawnPoints[0]) || tempVector.Equals(spawnPoints[1]) || tempVector.Equals(spawnPoints[2]) || tempVector.Equals(spawnPoints[3]))) {
-                            Boolean onSpawnPoint = false;
+                        Boolean onSpawnPoint = false;
+                        if (random.Next(0,100) > DIRT_SPAWN_CHANCE && !(tempVector.Equals(spawnPoints[0]) || tempVector.Equals(spawnPoints[1]) || tempVector.Equals(spawnPoints[2]) || tempVector.Equals(spawnPoints[3]))) {
                             for (int i = 0; i < spawnPoints.Length; i++) {
                                 if (tempVector.Equals(spawnPoints[i]) ||
                                     tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y - 1)) ||
@@ -58,7 +63,22 @@ namespace DynaBlaster.Class.MapScripts {
                                     tempVector.Equals(new Vector2(spawnPoints[i].X + 1, spawnPoints[i].Y))) onSpawnPoint = true;
                             }
                             if(!onSpawnPoint) blocks[x, y] = new Dirt(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize));
+                        }else {
+                            if(random.Next(0,100) < 10) {
+                                tempVector = new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize);
+                                tempVector = GridManager.GetOnGridPosition(tempVector.X, tempVector.Y);
+                                for (int i = 0; i < spawnPoints.Length; i++) {
+                                    if (tempVector.Equals(spawnPoints[i]) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y - 1)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X, spawnPoints[i].Y + 1)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X - 1, spawnPoints[i].Y)) ||
+                                    tempVector.Equals(new Vector2(spawnPoints[i].X + 1, spawnPoints[i].Y))) onSpawnPoint = true;
+                                }
+                                if (!onSpawnPoint) Map.mapObjects.Add(new Enemy(new Vector2(Map.mapPosition.X + x * blockSize, Map.mapPosition.Y + y * blockSize)));
+                            }
                         }
+
+                        
                     }
                 }
             }

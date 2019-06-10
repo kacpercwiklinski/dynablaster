@@ -50,6 +50,7 @@
     <Compile Include="Class\MapScripts\Map.cs" />
     <Compile Include="Class\MapScripts\MapObject.cs" />
     <Compile Include="Class\MapScripts\Wall.cs" />
+    <Compile Include="Class\PlayerScripts\Enemy.cs" />
     <Compile Include="Class\PlayerScripts\Player.cs" />
     <Compile Include="Class\Screen\GameOverScreen.cs" />
     <Compile Include="Class\Screen\GameScreen.cs" />

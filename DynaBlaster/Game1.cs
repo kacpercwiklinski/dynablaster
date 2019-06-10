@@ -72,7 +72,7 @@ namespace DynaBlaster
             mGameScreen = new GameScreen(this.Content, new EventHandler(GameScreenEvent));
             mGameOverScreen = new GameOverScreen(this.Content, new EventHandler(GameOverScreenEvent));
 
-            mCurrentScreen = mGameScreen;
+            mCurrentScreen = mMenuScreen;
         }
 
         private void GameOverScreenEvent(object sender, EventArgs e){
@@ -81,7 +81,7 @@ namespace DynaBlaster
 
         private void GameScreenEvent(object sender, EventArgs e){
             // Game Over
-            mCurrentScreen = mMenuScreen;
+            mCurrentScreen = mGameOverScreen;
         }
 
         private void MenuScreenEvent(object sender, EventArgs e){

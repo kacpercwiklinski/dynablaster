@@ -46,6 +46,7 @@ namespace DynaBlaster.Class.Screen
             ui = new UI();
             Map.mapObjects = new List<MapObject>();
             Map.explosions = new List<Explosion>();
+            Map.endDoorsSpawned = false;
             map = new Map();
             player = new Player(Map.blocks[(int)map.spawnPoints[0].X, (int)map.spawnPoints[0].Y].pos, this);
             Player.bombCounter = 0;

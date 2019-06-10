@@ -186,8 +186,13 @@ namespace DynaBlaster.Class.PlayerScripts {
                             this.maxBombsPlaced += bonus.bonusValue;
                             mapObj.destroyed = true;
                         }
+                    } else if (mapObj.label.Equals("Enemy")) {
+                        this.alive = false;
+                    } else if (mapObj.label.Equals("EndDoors") && Map.mapObjects.FindAll(enemy => enemy.label.Equals("Enemy")).Count == 0) {
+                        this.gameScreen.StartGame();
+                        mapObj.destroyed = true;
                     }
-                }else if (this.boundingBox.Intersects(mapObj.boundingBox) && mapObj.walkable == false) {
+                } else if (this.boundingBox.Intersects(mapObj.boundingBox) && mapObj.walkable == false) {
                     this.pos = prevPos;
                 }
             });

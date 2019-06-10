@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DynaBlaster.Class.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,9 +15,11 @@ namespace DynaBlaster.Class.Screen
     {
 
         Texture2D mGameOverScreen;
+        Texture2D mGameOverScreenBackground;
 
         public GameOverScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent)
         {
+            mGameOverScreenBackground = Game1.textureManager.gameOverScreenBackground;
             mGameOverScreen = Game1.textureManager.gameOverScreenBackground;
         }
 
@@ -32,6 +35,7 @@ namespace DynaBlaster.Class.Screen
 
         public override void Draw(SpriteBatch theBatch)
         {
+            theBatch.Draw(mGameOverScreenBackground, Vector2.Zero, Color.White);
             theBatch.Draw(mGameOverScreen, Vector2.Zero, Color.White);
             base.Draw(theBatch);
         }

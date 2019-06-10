@@ -12,14 +12,14 @@ namespace DynaBlaster.Class.Screen
     {
 
         //Background texture for the Title screen
-        //Texture2D mTitleScreenBackground;
+        Texture2D mTitleScreenBackground;
         public SpriteFont optionsFont;
         public List<Option> options;
         float counter = 0.2f;
 
         public MenuScreen(ContentManager theContent, EventHandler theScreenEvent) : base(theScreenEvent)
         {
-            //mTitleScreenBackground = Game1.textureManager.mainMenuScreenBackground; 
+            mTitleScreenBackground = Game1.textureManager.mainMenuScreenBackground; 
 
             options = new List<Option>();
             options.Add(new Option("Play singleplayer", true));
@@ -32,7 +32,7 @@ namespace DynaBlaster.Class.Screen
         {
             int index = 0;
             options.ForEach((option) => {
-                Color fontColor = option.active ? Color.White : Color.DarkSlateGray;
+                Color fontColor = option.active ? Color.Black : Color.LightSlateGray;
                 float fontLenght = optionsFont.MeasureString(option.label).Length();
                 spriteBatch.DrawString(optionsFont, option.label, new Vector2((float)(Game1.WIDTH / 2) - fontLenght / 2, (float)(Game1.HEIGHT / 2) + index * 100), fontColor);
                 index++;
@@ -59,7 +59,7 @@ namespace DynaBlaster.Class.Screen
 
         public override void Draw(SpriteBatch theBatch)
         {
-            //theBatch.Draw(mTitleScreenBackground, Vector2.Zero, Color.White);
+            theBatch.Draw(mTitleScreenBackground, Vector2.Zero, Color.White);
 
             drawOptions(theBatch);
 

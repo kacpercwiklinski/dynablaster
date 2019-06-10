@@ -12,7 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DynaBlaster.Class.MapScripts {
     class Dirt : MapObject {
 
-        private const float BONUS_DROP_CHANCE = 10f;
+        private const float BONUS_DROP_CHANCE = 20;
+        private const float END_DOORS_SPAWN_CHANCE = 4f;
         private const float DESTROY_ANIMATION_SPEED = 0.055f; // Less - faster
 
         private float counter;
@@ -49,13 +50,35 @@ namespace DynaBlaster.Class.MapScripts {
         }
 
         public void Destroy() {
+            int dirtCount = 0;
+
             for (int x = 0; x < Map.blocks.GetLength(0); x++) {
                 for (int y = 0; y < Map.blocks.GetLength(1); y++) {
+                    if (Map.blocks[x, y].label.Equals("Dirt")) dirtCount++;
+                }
+            }
+            for (int x = 0; x < Map.blocks.GetLength(0); x++) {
+                for (int y = 0; y < Map.blocks.GetLength(1); y++) {
+                   
                     if (Map.blocks[x, y].Equals(this)) {
                         Map.blocks[x, y] = new Grass(GridManager.absolutePosition(x, y));
+
                         if (Randomizer.random.Next(0, 101) < BONUS_DROP_CHANCE) {
-                            // Drop bonus
-                            Map.mapObjects.Add(new Bonus(GridManager.absolutePosition(x, y)));
+                            if (dirtCount > 0) {
+                                if (Randomizer.random.Next(0, 101) < END_DOORS_SPAWN_CHANCE && !Map.endDoorsSpawned) {
+                                    Map.mapObjects.Add(new Bonus(true, GridManager.absolutePosition(x, y)));
+                                    Map.endDoorsSpawned = true;
+                                } else {
+                                    Map.mapObjects.Add(new Bonus(false, GridManager.absolutePosition(x, y)));
+                                }
+                            } else {
+                                Map.mapObjects.Add(new Bonus(true, GridManager.absolutePosition(x, y)));
+                                Map.endDoorsSpawned = true;
+                            }
+                        }
+                        if(dirtCount == 1 && !Map.endDoorsSpawned) {
+                            Map.mapObjects.Add(new Bonus(true, GridManager.absolutePosition(x, y)));
+                            Map.endDoorsSpawned = true;
                         }
                         break;
                     }

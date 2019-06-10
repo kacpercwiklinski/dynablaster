@@ -45,6 +45,9 @@ namespace DynaBlaster.Class.Utils {
         public List<Texture2D> explosionTopEnd = new List<Texture2D>();
         public List<Texture2D> explosionBottomEnd = new List<Texture2D>();
 
+        public List<Texture2D> enemy_1 = new List<Texture2D>();
+        public List<Texture2D> enemy_1_death = new List<Texture2D>();
+
         // Debug
         public Texture2D debugPoint;
 
@@ -108,6 +111,7 @@ namespace DynaBlaster.Class.Utils {
 
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/bombRangeBonus"));
             bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/MaxBombsPlacedBonus"));
+            bonus.Add(theContent.Load<Texture2D>("Object/MapObject/Bonus/endDoors"));
 
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_0"));
             bomb.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/bomb_1"));
@@ -147,12 +151,25 @@ namespace DynaBlaster.Class.Utils {
             explosionBottomEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionBottomEnd_2"));
             explosionBottomEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionBottomEnd_1"));
             explosionBottomEnd.Add(theContent.Load<Texture2D>("Object/MapObject/bomb/Explosion/explosionBottomEnd_0"));
-            
+
+            enemy_1.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/enemy_1_0"));
+            enemy_1.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/enemy_1_1"));
+            enemy_1.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/enemy_1_2"));
+
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_1_death"));
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_2_death"));
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_3_death"));
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_4_death"));
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_5_death"));
+            enemy_1_death.Add(theContent.Load<Texture2D>("Object/MapObject/Enemy/Enemy_6_death"));
+
             // Debug
             debugPoint = theContent.Load<Texture2D>("debugTextures/debugPoint");
 
             // UI
             bar = theContent.Load<Texture2D>("Object/UI/bar");
+            gameOverScreenBackground = theContent.Load<Texture2D>("Object/UI/gameOverScreen");
+            mainMenuScreenBackground = theContent.Load<Texture2D>("Object/UI/mainMenuScreenBackground");
             numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/0"));
             numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/1"));
             numbers_font.Add(theContent.Load<Texture2D>("Object/UI/font/2"));
